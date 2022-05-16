@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.schfr.virtual_pet.GameController">
+    <children>
+        <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@images/bg.png" />
+            </image>
+        </ImageView>
+        <BorderPane prefHeight="600.0" prefWidth="600.0">
+            <center>
+                <Canvas fx:id="petCanvas" height="600.0" width="600.0" BorderPane.alignment="CENTER" />
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

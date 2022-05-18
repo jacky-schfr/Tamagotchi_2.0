@@ -1,41 +1,22 @@
 package com.schfr.virtual_pet;
 
 public class Food {
-    int foodValue, happinessLvl, x, y, ovalHeight, ovalWidth;
+    double foodValue, happinessLvl;
     String foodName;
 
     public void cupcake() {
-        this.foodName = "Cupcake";
-        this.foodValue = -10;
-        this.happinessLvl = 30;
+        foodName = "Cupcake";
+        foodValue = -0.1;
+        happinessLvl = 0.3;
     }
     public void pizza() {
-        this.foodName = "Pizza";
-        this.foodValue = 10;
-        this.happinessLvl = 30;
+        foodName = "Pizza";
+        foodValue = 0.1;
+        happinessLvl = 0.3;
     }
     public void broccoli() {
-        this.foodName = "Broccoli";
-        this.foodValue = 40;
-        this.happinessLvl = -10;
-    }
-
-    public void cupcakeParameter() {
-        this.x = 150;
-        this.y = 250;
-        this.ovalHeight = 100;
-        this.ovalWidth = 70;
-    }
-    public void pizzaParameter() {
-        this.x = 250;
-        this.y = 250;
-        this.ovalHeight = 100;
-        this.ovalWidth = 70;
-    }
-    public void broccoliParameter() {
-        this.x = 350;
-        this.y = 250;
-        this.ovalHeight = 100;
-        this.ovalWidth = 70;
+        foodName = "Broccoli";
+        foodValue = 0.4;
+        happinessLvl = -0.1;
     }
 }

@@ -11,12 +11,18 @@ public class Var {
     public static long currentTime;
     public static long animationTimer;
     public static long healthTimer, loveTimer, happinessTimer, hygeneTimer, illnessTimer, deathTimer;
-    public static Display switchScreen = Display.HOME_SCREEN;
+    public static Display switchScreen;
 
-    public static long init() {
+    public static boolean petC, foodC;
+
+    public static long setTimer() {
         return System.currentTimeMillis();
     }
+    public static void init() {
+        switchScreen = Display.HOME_SCREEN;
+    }
 }
+
 
 enum Display {
     NEW_PET,

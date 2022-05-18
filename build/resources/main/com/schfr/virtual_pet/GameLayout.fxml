@@ -1,21 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.schfr.virtual_pet.GameController">
-    <children>
-        <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@images/bg.png" />
-            </image>
-        </ImageView>
-        <BorderPane prefHeight="600.0" prefWidth="600.0">
-            <center>
-                <Canvas fx:id="petCanvas" height="600.0" width="600.0" BorderPane.alignment="CENTER" />
-            </center>
-        </BorderPane>
-    </children>
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.schfr.virtual_pet.GameController">
+    <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@images/bg.png" />
+    </ImageView>
+    <BorderPane prefHeight="600.0" prefWidth="600.0">
+      <right>
+            <Canvas fx:id="petCanvas" height="600.0" visible="false" width="600.0" BorderPane.alignment="CENTER" />
+      </right>
+    </BorderPane>
+   <GridPane layoutX="274.0" prefHeight="40.0" prefWidth="206.0" AnchorPane.bottomAnchor="460.0" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="100.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="75.0" />
+       <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+         <ProgressBar fx:id="healthBar" blendMode="OVERLAY" prefHeight="14.0" prefWidth="120.0" progress="0.53" style="-fx-accent: green" GridPane.columnIndex="1" />
+         <ProgressBar fx:id="happinessBar" blendMode="OVERLAY" prefHeight="14.0" prefWidth="120.0" progress="0.3" style="-fx-accent: orange" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Text fill="#00ff2b" strokeType="OUTSIDE" strokeWidth="0.0" text="Health">
+            <font>
+               <Font name="Consolas" size="14.0" />
+            </font>
+         </Text>
+         <Text fill="#fff800" layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness" GridPane.rowIndex="1">
+            <font>
+               <Font name="Consolas" size="14.0" />
+            </font>
+         </Text>
+   </GridPane>
+   <GridPane layoutX="130.0" layoutY="110.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="100.0">
+      <columnConstraints>
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+   </GridPane>
+      <ImageView fx:id="cupcakeB" accessibleRole="BUTTON" layoutX="284.0" layoutY="275.0" onMouseClicked="#giveC" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/food/cupcake.png" />
+      </ImageView>
+      <ImageView fx:id="homeB" accessibleRole="BUTTON" layoutX="269.0" layoutY="426.0" onMouseClicked="#homeScreen" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/buttons/home.png" />
+      </ImageView>
+      <ImageView fx:id="cutleryB" accessibleRole="BUTTON" layoutX="344.0" layoutY="424.0" onMouseClicked="#foodScreen" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/buttons/cutlery.png" />
+      </ImageView>
+      <ImageView fx:id="broccoliB" accessibleRole="BUTTON" layoutX="351.0" layoutY="271.0" onMouseClicked="#giveB" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/food/broccoli.png" />
+      </ImageView>
+      <ImageView fx:id="pizzaB" accessibleRole="BUTTON" layoutX="207.0" layoutY="277.0" onMouseClicked="#giveP" pickOnBounds="true" preserveRatio="true">
+            <Image url="@images/food/pizza.png" />
+      </ImageView>
 </AnchorPane>

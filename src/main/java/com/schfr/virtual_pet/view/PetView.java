@@ -13,7 +13,7 @@ public class PetView {
         this.canvas = view;
     }
 
-    public void setCanvas(Pet pet) {
+    public void setPetCanvas(Pet pet) {
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.clearRect(0 , 0, canvas.getWidth(), canvas.getHeight());
         g.drawImage(new Image(pet.filePet), 0, 0);

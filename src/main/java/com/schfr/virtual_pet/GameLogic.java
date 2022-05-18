@@ -1,13 +1,12 @@
 package com.schfr.virtual_pet;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameLogic extends Application {
     @Override
@@ -23,14 +22,14 @@ public class GameLogic extends Application {
         stage.show();
         stage.setResizable(false);
 
-        Timer timer = new Timer();
         controller.start();
-        timer.schedule(new TimerTask() {
+        AnimationTimer timer = new AnimationTimer() {
             @Override
-            public void run() {
+            public void handle(long now) {
                 controller.update();
             }
-        }, 0, 60);
+        };
+        timer.start();
     }
 
     public static void main(String[] args) {

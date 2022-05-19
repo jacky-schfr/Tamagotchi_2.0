@@ -7,13 +7,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Pet {
-    double happinessLvl, healthLvl, happinessMax, healthMax, loveLvl;
+    public double happinessLvl, healthLvl, happinessMax, healthMax, loveLvl;
     String name;
     String[] petFile = {"p1", "p2", "p3"};
     public String filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
-    Timer lveTimer = null, illTimer = null, deadTimer = null;
+    AnimationTimer lveTimer = null, illTimer = null, deadTimer = null;
     AnimationTimer aPetTimer = null;
-    Boolean moreLove;
+    Boolean moreLove, runningLove = false;
 
     public void petA(PetView pv, Pet p) {
         final long[] lastUpdate = {0};
@@ -30,7 +30,6 @@ public class Pet {
                     filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
                 }
             }
-
         };
         aPetTimer.start();
     }
@@ -53,7 +52,6 @@ public class Pet {
             if (healthLvl <= 0) {
                 healthLvl = 0;
             }
-            System.out.println(healthLvl);
         }
     }
 
@@ -67,24 +65,28 @@ public class Pet {
     }
 
     public void petLove() {
-        lveTimer = new Timer();
         Var.loveTimer = Var.setTimer();
-        lveTimer.schedule(new TimerTask() {
+        lveTimer = new AnimationTimer() {
             @Override
-            public void run() {
+            public void handle(long now) {
                 if (loveLvl < 100) {
                     if (!moreLove) {
-                        lveTimer.cancel();
-                        lveTimer = null;
+                        System.out.println("STOP");
+                        lveTimer.stop();
+                        runningLove = false;
                     }
                     if ((Var.currentTime - Var.loveTimer) >= 3500) {
                         loveLvl += 5;
                         Var.loveTimer = System.currentTimeMillis();
                     }
                 }
+
             }
-        }, 0, 60);
+        };
+        lveTimer.start();
+        runningLove = true;
     }
+
 
     public void updatePet() {
         moreLove = healthLvl >= 0.5 && happinessLvl >= 0.3 || healthLvl >= 0.3 && happinessLvl >= 0.5;
@@ -121,13 +123,12 @@ public class Pet {
     }
 
     public void illness() {
-        illTimer = new Timer();
         Var.illnessTimer = Var.setTimer();
-        illTimer.schedule(new TimerTask() {
+        illTimer = new AnimationTimer() {
             @Override
-            public void run() {
+            public void handle(long now) {
                 if (happinessLvl != 0) {
-                    illTimer.cancel();
+                    illTimer.stop();
                     illTimer = null;
                 }
                 if (happinessLvl == 0) {
@@ -137,10 +138,10 @@ public class Pet {
                     if ((Var.currentTime - Var.illnessTimer) >= 6500) {
                         death();
                     }
-//                    Var.illnessTimer = System.currentTimeMillis(); // bei Impfung.
                 }
             }
-        }, 0, 60);
+        };
+       illTimer.start();
     }
 
     public void death() {

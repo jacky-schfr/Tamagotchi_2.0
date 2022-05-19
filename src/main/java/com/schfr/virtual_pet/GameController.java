@@ -1,5 +1,6 @@
 package com.schfr.virtual_pet;
 
+import com.schfr.virtual_pet.view.HeartView;
 import com.schfr.virtual_pet.view.PetView;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +11,8 @@ public class GameController{
 
     public Food broccoli = new Food(), cupcake = new Food(), pizza = new Food();
     public ImageView broccoliB, cupcakeB, pizzaB;
+    public Canvas heartCanvas;
+    public ImageView homeB, cutleryB;
 
 
     @FXML
@@ -20,13 +23,14 @@ public class GameController{
 
     Pet pet;
     PetView petView;
+    HeartView heartView;
 
     public void start(){
 
-        System.out.println("init");
         Var.init();
         pet = new Pet();
         petView = new PetView(petCanvas);
+        heartView = new HeartView(heartCanvas);
         petView.setPetCanvas(pet);
         pet.petA(petView, pet);
         pet.startValues();
@@ -39,15 +43,25 @@ public class GameController{
             petView.setPetCanvas(pet);
             petCanvas.setVisible(true);
             showFood(false);
+            cutleryB.setOpacity(0.4);
+            homeB.setOpacity(1);
         }
         if (Var.switchScreen == Display.FOOD_SCREEN) {
             petCanvas.setVisible(false);
             showFood(true);
+            homeB.setOpacity(0.4);
+            cutleryB.setOpacity(1);
         }
         healthBar.setProgress(pet.healthLvl);
         happinessBar.setProgress(pet.happinessLvl);
         pet.petHealth();
         pet.petHappiness();
+        pet.updatePet();
+        heartView.setHeartCanvas(pet);
+        Var.currentTime = System.currentTimeMillis();
+        if (pet.moreLove && !pet.runningLove){
+            pet.petLove();
+        }
     }
 
     public void giveB() {

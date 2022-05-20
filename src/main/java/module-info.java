@@ -1,6 +1,7 @@
 module com.schfr.virtualpet {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.json;
 
 
     opens com.schfr.virtual_pet to javafx.fxml;

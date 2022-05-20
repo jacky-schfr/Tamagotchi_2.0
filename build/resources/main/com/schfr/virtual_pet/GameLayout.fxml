@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.schfr.virtual_pet.GameController">
+<AnchorPane fx:id="bg" onMouseClicked="#simpleClick" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.schfr.virtual_pet.GameController">
     <ImageView fitHeight="600.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@images/bg.png" />
     </ImageView>
@@ -60,6 +60,11 @@
          <Canvas fx:id="heartCanvas" height="95.0" width="90.0" />
       </children>
    </GridPane>
+   <ImageView fx:id="restartB" accessibleRole="BUTTON" layoutX="172.0" layoutY="236.0" onMouseClicked="#restart" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@images/buttons/restart.png" />
+      </image>
+   </ImageView>
       <ImageView fx:id="cupcakeB" accessibleRole="BUTTON" layoutX="284.0" layoutY="275.0" onMouseClicked="#giveC" pickOnBounds="true" preserveRatio="true">
             <Image url="@images/food/cupcake.png" />
       </ImageView>

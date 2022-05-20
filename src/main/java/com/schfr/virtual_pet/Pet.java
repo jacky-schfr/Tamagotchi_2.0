@@ -1,21 +1,21 @@
 package com.schfr.virtual_pet;
 
-import com.schfr.virtual_pet.view.PetView;
 import javafx.animation.AnimationTimer;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Pet {
     public double happinessLvl, healthLvl, happinessMax, healthMax, loveLvl;
     String name;
     String[] petFile = {"p1", "p2", "p3"};
+    String[] sickPetFile = {"ip1"};
+    String [] unhappyPetFile = {"sp1"};
+    String [] deadPetFile = {"dp1"};
     public String filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
     AnimationTimer lveTimer = null, illTimer = null, deadTimer = null;
     AnimationTimer aPetTimer = null;
     Boolean moreLove, runningLove = false;
 
-    public void petA(PetView pv, Pet p) {
+
+    public void petA() {
         final long[] lastUpdate = {0};
         aPetTimer = new AnimationTimer() {
             @Override
@@ -27,11 +27,27 @@ public class Pet {
                         Var.animationPetFileInt = 0;
                     }
                     lastUpdate[0] = now;
-                    filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
+                    definePet();
                 }
             }
         };
         aPetTimer.start();
+    }
+
+    public String definePet(){
+        if(Var.mood == Mood.HAPPY){
+            filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
+        }
+        if(Var.mood == Mood.SAD){
+            filePet = "com/schfr/virtual_pet/images/pet/" + unhappyPetFile[0] + ".png";
+        }
+        if(Var.mood == Mood.ILL){
+            filePet = "com/schfr/virtual_pet/images/pet/" + sickPetFile[0] + ".png";
+        }
+        if(Var.mood == Mood.DEAD){
+            filePet = "com/schfr/virtual_pet/images/pet/" + deadPetFile[0] + ".png";
+        }
+        return filePet;
     }
 
 
@@ -71,7 +87,6 @@ public class Pet {
             public void handle(long now) {
                 if (loveLvl < 100) {
                     if (!moreLove) {
-                        System.out.println("STOP");
                         lveTimer.stop();
                         runningLove = false;
                     }
@@ -133,7 +148,7 @@ public class Pet {
                 }
                 if (happinessLvl == 0) {
                     if ((Var.currentTime - Var.illnessTimer) >= 3500) {
-                        Var.switchScreen = Display.ILL;
+                        Var.mood = Mood.ILL;
                     }
                     if ((Var.currentTime - Var.illnessTimer) >= 6500) {
                         death();
@@ -145,6 +160,6 @@ public class Pet {
     }
 
     public void death() {
-        Var.switchScreen = Display.DEAD;
+        Var.mood = Mood.DEAD;
     }
 }

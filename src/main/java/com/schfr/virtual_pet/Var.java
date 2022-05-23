@@ -30,11 +30,13 @@ enum Display {
     NEW_PET,
     HOME_SCREEN,
     FOOD_SCREEN,
+    MEDICINE_SCREEN,
     RESTART
 }
 enum Mood {
     HAPPY,
     SAD,
     ILL,
-    DEAD
+    DEAD,
+    DEFAULT
 }

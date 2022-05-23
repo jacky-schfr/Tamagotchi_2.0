@@ -2,9 +2,11 @@ package com.schfr.virtual_pet;
 
 import com.schfr.virtual_pet.view.HeartView;
 import com.schfr.virtual_pet.view.PetView;
-import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 import java.io.FileWriter;
@@ -15,26 +17,25 @@ import java.util.Objects;
 
 import org.json.JSONObject;
 
-public class GameController{
+public class GameController {
 
     public Food broccoli = new Food(), cupcake = new Food(), pizza = new Food();
     public ImageView broccoliB, cupcakeB, pizzaB;
-    public Canvas heartCanvas;
-    public ImageView homeB, cutleryB;
+    public Canvas heartCanvas, petCanvas;
+    public ImageView homeB, cutleryB, medicineB;
     public ImageView restartB;
-
-
-    @FXML
-    private Canvas petCanvas;
-    @FXML
-    private ProgressBar healthBar, happinessBar;
+    public TextField inputName;
+    public Label nameQuestion;
+    public Button startB;
+    public ProgressBar healthBar, happinessBar;
+    public Button giveMed;
 
 
     Pet pet;
     PetView petView;
     HeartView heartView;
 
-    public void start(){
+    public void start() throws IOException {
 
         Var.init();
         pet = new Pet();
@@ -43,62 +44,118 @@ public class GameController{
         petView.setPetCanvas(pet);
         pet.petA();
         foodValue();
-        if(Objects.equals(pet.name, "")){
+        if (Objects.equals(pet.name, "")) {
             Var.switchScreen = Display.NEW_PET;
-            pet.startValues();
-        }
-        else {
+            pet.setValues();
+        } else {
             reloadSave(pet);
         }
     }
 
     public void update() {
-
+        // Drawing the different Scenes
         if (Var.switchScreen == Display.HOME_SCREEN) {
+            healthBar.setVisible(true);
+            happinessBar.setVisible(true);
             petView.setPetCanvas(pet);
             petCanvas.setVisible(true);
             showFood(false);
             restartB.setVisible(false);
+            giveMed.setVisible(false);
             cutleryB.setVisible(true);
             homeB.setVisible(true);
+            medicineB.setVisible(true);
+            medicineB.setOpacity(0.4);
             cutleryB.setOpacity(0.4);
             homeB.setOpacity(1);
-            if(Var.mood == Mood.DEAD){
+            startB.setVisible(false);
+            inputName.setVisible(false);
+            nameQuestion.setVisible(false);
+            if (Var.mood == Mood.DEAD) {
                 cutleryB.setVisible(false);
                 homeB.setVisible(false);
-                pet.name = "";
-                }
             }
-
+        }
+        if (Var.switchScreen == Display.MEDICINE_SCREEN){
+            healthBar.setVisible(true);
+            happinessBar.setVisible(true);
+            petView.setPetCanvas(pet);
+            petCanvas.setVisible(true);
+            showFood(false);
+            restartB.setVisible(false);
+            giveMed.setVisible(true);
+            cutleryB.setVisible(true);
+            homeB.setVisible(true);
+            medicineB.setVisible(true);
+            medicineB.setOpacity(1);
+            cutleryB.setOpacity(0.4);
+            homeB.setOpacity(0.4);
+            startB.setVisible(false);
+            inputName.setVisible(false);
+            nameQuestion.setVisible(false);
+            if (Var.mood == Mood.DEAD) {
+                cutleryB.setVisible(false);
+                homeB.setVisible(false);
+            }
+        }
         if (Var.switchScreen == Display.FOOD_SCREEN) {
+            healthBar.setVisible(true);
+            happinessBar.setVisible(true);
             petCanvas.setVisible(false);
             showFood(true);
             restartB.setVisible(false);
+            giveMed.setVisible(false);
             homeB.setOpacity(0.4);
             cutleryB.setOpacity(1);
+            medicineB.setOpacity(0.4);
+            startB.setVisible(false);
+            inputName.setVisible(false);
+            nameQuestion.setVisible(false);
         }
-        if (Var.switchScreen == Display.RESTART){
+        if (Var.switchScreen == Display.RESTART) {
+            healthBar.setVisible(false);
+            happinessBar.setVisible(false);
             petCanvas.setVisible(false);
             showFood(false);
             homeB.setVisible(false);
             cutleryB.setVisible(false);
             restartB.setVisible(true);
+            startB.setVisible(false);
+            inputName.setVisible(false);
+            nameQuestion.setVisible(false);
         }
-        healthBar.setProgress(pet.healthLvl);
-        happinessBar.setProgress(pet.happinessLvl);
-        pet.petHealth();
-        pet.petHappiness();
-        pet.updatePet();
-        checkMood(pet);
+        if (Var.switchScreen == Display.NEW_PET) {
+            healthBar.setVisible(false);
+            happinessBar.setVisible(false);
+            petCanvas.setVisible(false);
+            showFood(false);
+            homeB.setVisible(false);
+            cutleryB.setVisible(false);
+            restartB.setVisible(false);
+            startB.setVisible(true);
+            inputName.setVisible(true);
+            nameQuestion.setVisible(true);
+        }
+        // updating the pet
+        if (Var.mood != Mood.DEFAULT && Var.mood != Mood.DEAD) {
+            healthBar.setProgress(pet.healthLvl);
+            happinessBar.setProgress(pet.happinessLvl);
+            pet.petHealth();
+            pet.petHappiness();
+            pet.updatePet();
+            setMood(pet);
+        }
+        // updating the pet love
         heartView.setHeartCanvas(pet);
         Var.currentTime = System.currentTimeMillis();
-        if (pet.moreLove && !pet.runningLove){
+        if (pet.moreLove && !pet.runningLove) {
             pet.petLove();
         }
-        if (Var.currentTime%5 == 0){
+        // saving the data
+        if (Var.currentTime % 5 == 0) {
             save(pet);
         }
-        System.out.println(Var.mood + " - "+Var.switchScreen.toString()) ;
+        System.out.println(Var.mood);
     }
 
     public void giveB() {
@@ -113,12 +170,13 @@ public class GameController{
         pet.feeding(pizza);
     }
 
-    public void foodValue(){
+    public void foodValue() {
         broccoli.broccoli();
         cupcake.cupcake();
         pizza.pizza();
     }
-    public void showFood(Boolean b){
+
+    public void showFood(Boolean b) {
         broccoliB.setVisible(b);
         cupcakeB.setVisible(b);
         pizzaB.setVisible(b);
@@ -131,8 +189,24 @@ public class GameController{
     public void foodScreen() {
         Var.switchScreen = Display.FOOD_SCREEN;
     }
-    public static void save(Pet p){
-        try{
+
+    public void medicineScreen() {
+        Var.switchScreen = Display.MEDICINE_SCREEN;
+    }
+    public void giveMeds() {
+        if(Var.mood == Mood.ILL){
+            if (pet.healthLvl<0.5){
+                pet.healthLvl = 0.5;
+            }
+            if (pet.happinessLvl<0.5){
+                pet.happinessLvl = 0.5;
+            }
+            Var.mood = Mood.HAPPY;
+        }
+    }
+
+    public static void save(Pet p) {
+        try {
             String content = new String(Files.readAllBytes(Paths.get(Var.petSave.toURI())), "UTF-8");
             JSONObject json = new JSONObject(content);
 
@@ -145,48 +219,50 @@ public class GameController{
             fw.write(json.toString());
             fw.flush();
             fw.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public static void reloadSave(Pet p){
-        try{
-            String content = Files.readString(Paths.get(Var.petSave.toURI()));
-            JSONObject json = new JSONObject(content);
 
-            p.name = json.getString("name");
-            p.loveLvl = json.getDouble("loveLvl");
-            p.healthLvl = json.getDouble("health");
-            p.happinessLvl = json.getDouble("happiness");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    public static void reloadSave(Pet p) throws IOException {
+        String content = Files.readString(Paths.get(Var.petSave.toURI()));
+        JSONObject json = new JSONObject(content);
+
+        p.name = json.getString("name");
+        p.loveLvl = json.getDouble("loveLvl");
+        p.healthLvl = json.getDouble("health");
+        p.happinessLvl = json.getDouble("happiness");
     }
-    public static void checkMood(Pet p){
-        if(p.happinessLvl > 0.3){
+
+    public static void setMood(Pet p) {
+        if (p.happinessLvl > 0.3) {
             Var.mood = Mood.HAPPY;
         }
-        if(p.happinessLvl <= 0.3 && Var.mood != Mood.ILL && Var.mood != Mood.DEAD){
+        if (p.happinessLvl <= 0.3 && Var.mood != Mood.ILL && Var.mood != Mood.DEAD) {
             Var.mood = Mood.SAD;
         }
         if (p.happinessLvl == 0 && p.illTimer == null) {
             p.illness();
         }
     }
-    public void restart() throws IOException {
-        System.out.println("RESTTTTTTTTT");
-        Var.petSave.createNewFile();
-        System.out.println(Var.switchScreen);
-        Var.switchScreen = Display.HOME_SCREEN;
-        System.out.println(Var.switchScreen);
-    }
+
     public void simpleClick() {
-        if (Var.mood == Mood.DEAD){
-            pet.startValues();
-            Var.mood = Mood.HAPPY;
+        if (Var.mood == Mood.DEAD) {
+            Var.mood = Mood.DEFAULT;
+            pet.name = "";
             Var.switchScreen = Display.RESTART;
         }
+    }
+
+    public void restart() throws IOException {
+        Var.petSave.createNewFile();
+        pet.setValues();
+        Var.switchScreen = Display.NEW_PET;
+    }
+
+    public void newPet() {
+        pet.name = inputName.getText();
+        Var.mood = Mood.HAPPY;
+        Var.switchScreen = Display.HOME_SCREEN;
     }
 }

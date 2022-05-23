@@ -7,8 +7,8 @@ public class Pet {
     String name;
     String[] petFile = {"p1", "p2", "p3"};
     String[] sickPetFile = {"ip1"};
-    String [] unhappyPetFile = {"sp1"};
-    String [] deadPetFile = {"dp1"};
+    String[] unhappyPetFile = {"sp1"};
+    String[] deadPetFile = {"dp1"};
     public String filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
     AnimationTimer lveTimer = null, illTimer = null, deadTimer = null;
     AnimationTimer aPetTimer = null;
@@ -34,18 +34,21 @@ public class Pet {
         aPetTimer.start();
     }
 
-    public String definePet(){
-        if(Var.mood == Mood.HAPPY){
+    public String definePet() {
+        if (Var.mood == Mood.HAPPY) {
             filePet = "com/schfr/virtual_pet/images/pet/" + petFile[Var.animationPetFileInt] + ".png";
         }
-        if(Var.mood == Mood.SAD){
+        if (Var.mood == Mood.SAD) {
             filePet = "com/schfr/virtual_pet/images/pet/" + unhappyPetFile[0] + ".png";
         }
-        if(Var.mood == Mood.ILL){
+        if (Var.mood == Mood.ILL) {
             filePet = "com/schfr/virtual_pet/images/pet/" + sickPetFile[0] + ".png";
         }
-        if(Var.mood == Mood.DEAD){
+        if (Var.mood == Mood.DEAD) {
             filePet = "com/schfr/virtual_pet/images/pet/" + deadPetFile[0] + ".png";
+        }
+        if (Var.mood == Mood.DEFAULT) {
+            filePet = "com/schfr/virtual_pet/images/pet/" + petFile[0] + ".png";
         }
         return filePet;
     }
@@ -56,7 +59,7 @@ public class Pet {
         this.healthMax = 1;
     }
 
-    public void startValues() {
+    public void setValues() {
         this.happinessLvl = 0.5;
         this.healthLvl = 0.5;
         this.loveLvl = 0;
@@ -119,21 +122,23 @@ public class Pet {
         }*/
 
     public void feeding(Food f) {
-        happinessLvl = happinessLvl + f.happinessLvl;
+        if (Var.mood != Mood.ILL && Var.mood != Mood.DEAD){
+            happinessLvl = happinessLvl + f.happinessLvl;
 
-        if (happinessLvl > 1) {
-            happinessLvl = happinessMax;
-        }
-        if (happinessLvl < 0) {
-            happinessLvl = 0;
-        }
-        healthLvl = healthLvl + f.foodValue;
+            if (happinessLvl > 1) {
+                happinessLvl = happinessMax;
+            }
+            if (happinessLvl < 0) {
+                happinessLvl = 0;
+            }
+            healthLvl = healthLvl + f.foodValue;
 
-        if (healthLvl > 1) {
-            healthLvl = happinessMax;
-        }
-        if (healthLvl < 0) {
-            healthLvl = 0;
+            if (healthLvl > 1) {
+                healthLvl = happinessMax;
+            }
+            if (healthLvl < 0) {
+                healthLvl = 0;
+            }
         }
     }
 
@@ -152,11 +157,12 @@ public class Pet {
                     }
                     if ((Var.currentTime - Var.illnessTimer) >= 6500) {
                         death();
+                        illTimer.stop();
                     }
                 }
             }
         };
-       illTimer.start();
+        illTimer.start();
     }
 
     public void death() {

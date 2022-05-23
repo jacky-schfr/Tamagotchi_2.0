@@ -60,12 +60,37 @@
          <Canvas fx:id="heartCanvas" height="95.0" width="90.0" />
       </children>
    </GridPane>
-   <ImageView fx:id="restartB" accessibleRole="BUTTON" layoutX="172.0" layoutY="236.0" onMouseClicked="#restart" pickOnBounds="true" preserveRatio="true">
+   <Button fx:id="startB" layoutX="265.0" layoutY="330.0" mnemonicParsing="false" onMouseClicked="#newPet" style="-fx-background-color: WHITE; -fx-border-color: BLACK;" text="START">
+      <font>
+         <Font name="Consolas Bold" size="14.0" />
+      </font>
+   </Button>
+   <Label fx:id="nameQuestion" layoutX="170.0" layoutY="250.0" text="Please enter a name for your new pet!">
+      <font>
+         <Font name="Consolas Bold" size="13.0" />
+      </font>
+   </Label>
+   <TextField fx:id="inputName" layoutX="250.0" layoutY="290.0" style="-fx-border-color: #000;">
+      <font>
+         <Font name="Consolas" size="12.0" />
+      </font>
+   </TextField>
+   <Button fx:id="giveMed" layoutX="255.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#giveMeds" style="-fx-border-color: BLACK; -fx-background-color: White;" text="GIVE MEDICINE" textAlignment="CENTER">
+      <font>
+         <Font name="Calibri Bold" size="11.0" />
+      </font>
+   </Button>
+   <ImageView fx:id="medicineB" accessibleRole="BUTTON" onMouseClicked="#medicineScreen" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="425.0">
+      <image>
+         <Image url="@images/buttons/medicine.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="restartB" accessibleRole="BUTTON" layoutX="172.0" layoutY="236.0" onMouseClicked="#restart" pickOnBounds="true" preserveRatio="true" visible="false">
       <image>
          <Image url="@images/buttons/restart.png" />
       </image>
    </ImageView>
-      <ImageView fx:id="cupcakeB" accessibleRole="BUTTON" layoutX="284.0" layoutY="275.0" onMouseClicked="#giveC" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="cupcakeB" accessibleRole="BUTTON" layoutX="284.0" layoutY="275.0" onMouseClicked="#giveC" pickOnBounds="true" preserveRatio="true" visible="false">
             <Image url="@images/food/cupcake.png" />
       </ImageView>
       <ImageView fx:id="homeB" accessibleRole="BUTTON" layoutX="269.0" layoutY="426.0" onMouseClicked="#homeScreen" pickOnBounds="true" preserveRatio="true">
@@ -74,10 +99,10 @@
       <ImageView fx:id="cutleryB" accessibleRole="BUTTON" layoutX="344.0" layoutY="424.0" onMouseClicked="#foodScreen" pickOnBounds="true" preserveRatio="true">
             <Image url="@images/buttons/cutlery.png" />
       </ImageView>
-      <ImageView fx:id="broccoliB" accessibleRole="BUTTON" layoutX="351.0" layoutY="271.0" onMouseClicked="#giveB" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="broccoliB" accessibleRole="BUTTON" layoutX="351.0" layoutY="271.0" onMouseClicked="#giveB" pickOnBounds="true" preserveRatio="true" visible="false">
             <Image url="@images/food/broccoli.png" />
       </ImageView>
-      <ImageView fx:id="pizzaB" accessibleRole="BUTTON" layoutX="207.0" layoutY="277.0" onMouseClicked="#giveP" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pizzaB" accessibleRole="BUTTON" layoutX="207.0" layoutY="277.0" onMouseClicked="#giveP" pickOnBounds="true" preserveRatio="true" visible="false">
             <Image url="@images/food/pizza.png" />
       </ImageView>
 </AnchorPane>

@@ -74,6 +74,8 @@ public class GameController {
             if (Var.mood == Mood.DEAD) {
                 cutleryB.setVisible(false);
                 homeB.setVisible(false);
+                medicineB.setVisible(false);
+                giveMed.setVisible(false);
             }
         }
         if (Var.switchScreen == Display.MEDICINE_SCREEN){
@@ -96,6 +98,8 @@ public class GameController {
             if (Var.mood == Mood.DEAD) {
                 cutleryB.setVisible(false);
                 homeB.setVisible(false);
+                medicineB.setVisible(false);
+                giveMed.setVisible(false);
             }
         }
         if (Var.switchScreen == Display.FOOD_SCREEN) {
@@ -119,7 +123,9 @@ public class GameController {
             showFood(false);
             homeB.setVisible(false);
             cutleryB.setVisible(false);
+            medicineB.setVisible(false);
             restartB.setVisible(true);
+            giveMed.setVisible(false);
             startB.setVisible(false);
             inputName.setVisible(false);
             nameQuestion.setVisible(false);
@@ -132,6 +138,7 @@ public class GameController {
             homeB.setVisible(false);
             cutleryB.setVisible(false);
             restartB.setVisible(false);
+            medicineB.setVisible(false);
             startB.setVisible(true);
             inputName.setVisible(true);
             nameQuestion.setVisible(true);
@@ -155,7 +162,6 @@ public class GameController {
         if (Var.currentTime % 5 == 0) {
             save(pet);
         }
-        System.out.println(Var.mood);
     }
 
     public void giveB() {
